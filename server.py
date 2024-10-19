@@ -48,13 +48,17 @@ async def predict(file: UploadFile = File(...)):
 
         # Return the prediction as HTML response
         result = f"""
-        <html>
-            <body>
-                <h1>Prediction Result</h1>
-                <p><b>Prediction:</b> {result}</p>
-                <a href="/">Go back</a>
-            </body>
-        </html>
+<html>
+    <head>
+        <title>Prediction Result</title>
+    </head>
+    <body>
+        <h1>Prediction Result</h1>
+        <p><b>Prediction:</b> {result}</p>
+        <a href="/">Go back</a>
+    </body>
+</html>
+
         """
         return HTMLResponse(content=result)
 
@@ -65,25 +69,100 @@ async def predict(file: UploadFile = File(...)):
 @app.get("/")
 def main():
    content = """
-    <html>
-        <head>
-            <title>Image Upload</title>
-            <style>
-                body { font-family: Arial, sans-serif; margin: 50px; text-align: center; }
-                form { border: 1px solid #f1f1f1; padding: 20px; border-radius: 10px; display: inline-block; }
-                input[type="file"] { margin-bottom: 20px; }
-                input[type="submit"] { background-color: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
-                input[type="submit"]:hover { background-color: #45a049; }
-            </style>
-        </head>
-        <body>
-            <h1>Upload an Image for Classification</h1>
-            <form action="/predict/" enctype="multipart/form-data" method="post">
-                <input name="file" type="file" accept="image/*">
-                <input type="submit" value="Upload and Classify">
-            </form>
-        </body>
-    </html>
+  <html>
+    <head>
+        <title>Image Upload</title>
+        <style>
+            body {
+                font-family: 'Poppins', Arial, sans-serif;
+                background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+                margin: 0;
+                padding: 0;
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                color: #333;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+                margin-bottom: 20px;
+                color: #fff;
+            }
+
+            form {
+                background-color: #fff;
+                border-radius: 15px;
+                padding: 30px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+                max-width: 400px;
+                width: 100%;
+                transition: transform 0.3s;
+            }
+
+            form:hover {
+                transform: translateY(-5px);
+            }
+
+            input[type="file"] {
+                padding: 10px;
+                margin-bottom: 25px;
+                background-color: #f1f1f1;
+                border: none;
+                border-radius: 8px;
+                width: 100%;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+
+            input[type="file"]:hover {
+                background-color: #e1e1e1;
+            }
+
+            input[type="submit"] {
+                background-color: #6a11cb;
+                background-image: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+                color: white;
+                border: none;
+                padding: 12px 25px;
+                font-size: 1rem;
+                border-radius: 50px;
+                cursor: pointer;
+                transition: background-color 0.3s, box-shadow 0.3s;
+            }
+
+            input[type="submit"]:hover {
+                background-color: #4f7ac3;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            @media (max-width: 600px) {
+                body {
+                    padding: 20px;
+                }
+
+                form {
+                    width: 100%;
+                    padding: 20px;
+                }
+
+                h1 {
+                    font-size: 2rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Upload an Image for Classification</h1>
+        <form action="/predict/" enctype="multipart/form-data" method="post">
+            <input name="file" type="file" accept="image/*">
+            <input type="submit" value="Upload and Classify">
+        </form>
+    </body>
+</html>
+
     """
    return HTMLResponse(content=content)
 
